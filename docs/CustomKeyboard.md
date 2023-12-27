@@ -25,7 +25,7 @@
   * 可选项，对应 [ButtonInsets 选项](#buttoninsets-选项)。
 * `rows`: 键盘的行。
   * **必选项**，数组类型。
-  * 数组中每个元素对应 [Row 模型](#row-模型)
+  * 数组中每个元素对应 [Row 模型](#row-模型)。
 
 ## Row 模型
 
@@ -33,8 +33,8 @@
   * 可选项，对应 [RowHeight 选项](#rowheight-选项)，可分别为横屏或纵屏设置不同的高度。
   * 如果自定义的键盘的所有行的高度是相等的，请使用 Keyboard 模型中的 `rowHeight` 属性。
 * `keys`：当前行的按键。
-  * **必选项**，数组类型
-  * 数组中每个元素对应 [Key 模型](#key-模型)
+  * **必选项**，数组类型。
+  * 数组中每个元素对应 [Key 模型](#key-模型)。
 
 ## Key 模型
 
@@ -49,12 +49,12 @@
 
   * 可选值，布尔类型(true/false)。如果不填写，默认为 ture，表示默认由 RIME 引擎处理。
 
-  > 注意：此参数对 symbol 类型无效，symbol 类型始终不经过 rime 引擎处理
+  > 注意：此参数对 symbol 类型无效，symbol 类型始终不经过 rime 引擎处理。
 
 * `label`: 按键显示文本。
 
   * 可选值，字符串类型。如果不填写，则使用 `action` 对应的文本显示，比如 `action` 的值为 `character(a)`，则显示为 `a`。
-  * `label` 可填写两种格式，
+  * `label` 可填写两种格式:
     * 格式1: `label: '长显文本'`，为非空格键指定长显的文本。 
     * 格式2: 为空格指定加载文本使用。
     ```yaml
@@ -65,12 +65,12 @@
 * `swipe`：按键滑动配置。
 
   * 可选值，数组类型，每个元素对应 [KeySwipe 模型](#keyswipe-模型) 模型。如果为空，则表示该按键没有划动配置。
-  * 具体配置参考 [KeySwipe 模型](#keyswipe-模型)
+  * 具体配置参考 [KeySwipe 模型](#keyswipe-模型)。
 
 * `callout`：按键长按呼出视图配置。
 
   * 可选值，数组类型，每个元素对应 [KeyCallout 模型](#keycallout-模型) 模型。如果为空，则表示该按键长按呼出设置。
-  * 具体配置参考 [KeyCallout 模型](#keycallout-模型)
+  * 具体配置参考 [KeyCallout 模型](#keycallout-模型)。
   * 例如：
   ```yaml
   callout:
@@ -93,7 +93,7 @@
 
 * `processByRIME`: 表示滑动触发操作是否经过 RIME 引擎处理。
   * 可选值。布尔类型(true/false)。如果不填写，默认为 false，即不经过 rime 引擎处理。
-  > 注意：此参数对 symbol 类型无效，symbol 类型始终不经过 rime 引擎处理
+  > 注意：此参数对 symbol 类型无效，symbol 类型始终不经过 rime 引擎处理。
 
 ## KeyCallout 模型
 
@@ -122,7 +122,6 @@
   例如：
   * `a` 键的配置为 `action: { character: { char: a } }`，注意是小写，如果想显示为大写可以通过 `label` 属性配置实现。
 
-
 * `characterMargin: { char: 字符 }`：用来表示虚拟按键的占位符。不显示，但点击后会和 `character` 的效果相同。例如中文26键中 `A` 键的左侧空白，`L`键的右侧空白。
 
   > 注意：`characterMargin` 类型会经过 RIME 引擎处理，所以必须是 ASCII 中的单个字符，如果是多个，则截取首个字符。
@@ -130,16 +129,16 @@
 * `keyboardType: type`: 表示切换虚拟键盘的类型，其中 type 表示切换的类型。type 必须符合 [KeyboardType 选项](#keyboardtype-选项)，具体如何填写请参考 [KeyboardType 选项](#keyboardtype-选项)。
 
   例如：
-  * 表示切换到数字九宫格键盘 `action: { keyboardType: numericNineGrid }`
-  * 表示切换分类符号键盘 `action: { keyboardType: classifySymbolic }`
-  * 表示切换到自定义键盘-仓颉 `action: { keyboardType: 仓颉 }`
+  * 表示切换到数字九宫格键盘 `action: { keyboardType: numericNineGrid }`。
+  * 表示切换分类符号键盘 `action: { keyboardType: classifySymbolic }`。
+  * 表示切换到自定义键盘-仓颉 `action: { keyboardType: 仓颉 }`。
 
 * `symbol: { char: string }`：用来表示想要输入字符串，其中 `string` 表示您想输入的字符串，可以为任何 unicode 字符，不限长度。
 
   > 注意：`symbol` 类型不会经过 RIME 引擎处理。
   
   例如：
-  * `action: { symbol: { char: 你好 } }`，会直接上屏“你好”。
+  * `action: { symbol: { char: 您好 } }`，会直接上屏“您好”。
 
 * `shortcutCommand: command`: 用来表示快捷指令，其中 `command` 表示指令名称。具体指令名称请参考 [#ShortcutCommand 选项](#shortcutcommand-选项)。
 
@@ -175,13 +174,13 @@
 * `#上个输入方案`：表示当在“输入方案列表”中选择两个或两个以上方案时，最近一次的输入方案与当前输入方案切换。
 * `#换行`：表示换行，注意：这里使用 `\r` 表示换行。
 * `#RimeSwitcher`：表示进入 RIME 的 switch 功能。
-* `#左移`：表示光标向左移动一个字符
-* `#右移`：表示光标向右移动一个字符
-* `sendKeys: { keys: string }`：表示向 RIME 引擎发送指定按键。`string` 表示组合按键的配置，配置示例: `action: { shortcutCommand: { sendKeys: { keys: "Control+l" } } }`
-* `#关闭键盘`：表示关闭当前键盘
-* `#左手模式`: 单手模式中的左手模式
-* `#右手模式`: 单手模式中的右手模式
-* `#方案切换`: 显示已选的方案列表，在列表中可切换当前输入方案。
+* `#左移`：表示光标向左移动一个字符。
+* `#右移`：表示光标向右移动一个字符。
+* `sendKeys: { keys: string }`：表示向 RIME 引擎发送指定按键。`string` 表示组合按键的配置，配置示例: `action: { shortcutCommand: { sendKeys: { keys: "Control+l" } } }`。
+* `#关闭键盘`：表示关闭当前键盘。
+* `#左手模式`: 单手模式中的左手模式。
+* `#右手模式`: 单手模式中的右手模式。
+* `#方案切换`: 显示以选的方案列表，在列表中可切换当前输入方案。
 
 ## KeyWidth 选项
 
@@ -201,7 +200,7 @@ KeyWidth 选项可以填写以下值：
  
   例如：`width: { percentage: 0.13 }` 表示行宽度的 13% 作为当前按键的宽度。
 
-* `points: value`: 指定按键宽度为已 pt(point) 为单位的固定值。其中 `value` 为浮点类型。
+* `points: value`: 指定按键宽度为以 pt(point) 为单位的固定值。其中 `value` 为浮点类型。
 
   例如：`width: { points: 20 }`：表示当前按键宽度为 20 个 pt。
 
@@ -232,7 +231,7 @@ width:
 
 ## RowHeight 选项
 
-用来表示行高。有两种表达方式
+用来表示行高。有两种表达方式：
 
 * 方式1：单独填写浮点类型数值，如：`rowHeight: 40.5`，则表示屏幕在横屏与纵屏模式下行高相同。
 * 方式2：纵屏和横屏模式下设定不同的高度。可以为`portrait`与`landscape`赋值。如：
@@ -245,7 +244,7 @@ rowHeight:
 
 ## ButtonInsets 选项
 
-用来表示按键内距。有两种表达方式
+用来表示按键内距。有两种表达方式：
 
 * 方式1: 单独填写浮点数值，如`buttonInsets: 3`，表示按键的四条边的内距相同，都为 `3`。
 * 方式2：对象模式，为四边分别设定内距。如：
@@ -503,4 +502,4 @@ keyboards:
 这两种方式有什么区别？
 
 1. 方式一是通过界面导入的，导入的内容会存储在应用内部存储（非文本文件格式），不利于临时修改调整。也不利于 `iCloud同步` 功能。
-2. 方式二是通过配置文件生效的，你可以看到明文内容，可随时调整，也可以利用`iCloud同步`功能。
+2. 方式二是通过配置文件生效的，您可以看到明文内容，可随时调整，也可以利用`iCloud同步`功能。

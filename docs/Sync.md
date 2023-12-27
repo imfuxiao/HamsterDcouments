@@ -56,7 +56,7 @@ RIME 同步是 RIME 内置的功能，主要用来同步输入方案中的词库
 
 以上步骤在当前设备就配置完毕了，其他设备和平台，可以参考上面的步骤 3，需要注意的就是不同平台下`sync_dir`的填写路径了。
 
-设置成功后，你可运行「RIME 同步」功能，如果设置正确，您可以使用 iOS 内置应用 Files（中文系统名为：文件）查看 iCloud 中的文件，具体在`Browse/iCloud Drive/Hamster`（中文系统为：`浏览/iCloud云盘/仓输入法`）。
+设置成功后，您可运行「RIME 同步」功能，如果设置正确，您可以使用 iOS 内置应用 Files（中文系统名为：文件）查看 iCloud 中的文件，具体在`Browse/iCloud Drive/Hamster`（中文系统为：`浏览/iCloud云盘/仓输入法`）。
 
 ## iCloud 同步
 
@@ -67,7 +67,7 @@ iCloud 同步有两个方向：「上传文件至 iCloud」 和「下载 iCloud 
 「上传文件至 iCloud」：对应「iCloud同步」功能下的「拷贝应用文件至iCloud」，需要手动触发。
 「下载 iCloud 中的文件」：在开启「iCloud同步」功能下「iCloud」开关后，功能会自动运行。
 
-![iCloud同步](images/Sync_001.png)
+![iCloud同步](images/Sync_002.png)
 
 ### 拷贝应用文件至iCloud
 
@@ -80,7 +80,7 @@ iCloud 同步有两个方向：「上传文件至 iCloud」 和「下载 iCloud 
 * `^.*[.]userdb.*$`: 表示过滤 userdb 目录及其包含的文件
 * `^.*build.*$`：表示过滤 build 目录及其包含的文件
 * `^.*SharedSupport.*$`：表示过滤 SharedSupport 目录及其包含的文件
-* `^.*[.]bin$`：表示过滤已 `.bin` 结尾的文件
+* `^.*[.]bin$`：表示过滤以 `.bin` 结尾的文件
 
 > 注意：不需要手工敲这些过滤表达式，点击功能下的说明文字即可复制。然后按个人需要修改。
 
