@@ -1,0 +1,506 @@
+# 自定义键盘
+
+在内置键盘不能满足您的自定义需求时，您可以根据此文档，自定义属于您自己的键盘。
+
+
+
+
+# 如何定义一个键盘
+
+这里将一个键盘抽象为 `Keyboard`, `Row`, `Key`，`KeySwipe` 等模型。
+
+其中 `Keyboard` 模型用来表示具体的键盘，`Row` 表示键盘的一行，`Key` 表示行中按键，`KeySwipe` 表示按键的划动配置。
+
+## Keyboard 模型
+
+* `name`: 键盘名称。
+  * **必选项**，字符串类型。
+  * **请保证名称的唯一性**，否则相同名称的键盘会存在覆盖情况。
+* `isPrimary`: 是否是主键盘类型
+  * 可选值，布尔类型，默认值为 `false`
+  * 用于点击符号返回主键盘功能。
+* `rowHeight`：键盘中全部行的行高。如果为此项赋值，那么键盘的所有行高都为此值。
+  * 可选项，对应 [RowHeight 选项](#rowheight-选项)，可分别为横屏或纵屏设置不同的高度。
+* `buttonInsets`: 按钮内距。
+  * 可选项，对应 [ButtonInsets 选项](#buttoninsets-选项)。
+* `rows`: 键盘的行。
+  * **必选项**，数组类型。
+  * 数组中每个元素对应 [Row 模型](#row-模型)
+
+## Row 模型
+
+* `rowHeight`: 当前行的行高。
+  * 可选项，对应 [RowHeight 选项](#rowheight-选项)，可分别为横屏或纵屏设置不同的高度。
+  * 如果自定义的键盘的所有行的高度是相等的，请使用 Keyboard 模型中的 `rowHeight` 属性。
+* `keys`：当前行的按键。
+  * **必选项**，数组类型
+  * 数组中每个元素对应 [Key 模型](#key-模型)
+
+## Key 模型
+
+* `action`：按键对应的操作。
+  * **必选项**，字符串类型。内容必须符合 [Action 选项](#action-选项)，具体如何填写请参考 [Action 选项](#action-选项)。
+
+* `width`：按键宽度。
+  * 可选项，字符串类型。如果为空，则默认为 `input` 宽度选项。
+  * 填写值对应 [KeyWidth 选项](#keywidth-选项) 选项。
+
+* `processByRIME`：是否由 RIME 引擎处理。
+
+  * 可选值，布尔类型(true/false)。如果不填写，默认为 ture，表示默认由 RIME 引擎处理。
+
+  > 注意：此参数对 symbol 类型无效，symbol 类型始终不经过 rime 引擎处理
+
+* `label`: 按键显示文本。
+
+  * 可选值，字符串类型。如果不填写，则使用 `action` 对应的文本显示，比如 `action` 的值为 `character(a)`，则显示为 `a`。
+  * `label` 可填写两种格式，
+    * 格式1: `label: '长显文本'`，为非空格键指定长显的文本。 
+    * 格式2: 为空格指定加载文本使用。
+    ```yaml
+    label:
+      loadingText: '加载文字'
+      text: '常显文字'
+    ```
+* `swipe`：按键滑动配置。
+
+  * 可选值，数组类型，每个元素对应 [KeySwipe 模型](#keyswipe-模型) 模型。如果为空，则表示该按键没有划动配置。
+  * 具体配置参考 [KeySwipe 模型](#keyswipe-模型)
+
+* `callout`：按键长按呼出视图配置。
+
+  * 可选值，数组类型，每个元素对应 [KeyCallout 模型](#keycallout-模型) 模型。如果为空，则表示该按键长按呼出设置。
+  * 具体配置参考 [KeyCallout 模型](#keycallout-模型)
+  * 例如：
+  ```yaml
+  callout:
+    - action: { shortcutCommand: "#上个输入方案" }
+  ```
+
+## KeySwipe 模型
+
+* `direction`: 滑动方向。
+  * **必选值**，字符串类型。内容必须符合 [Direction 选项](#direction-选项) 选项。
+
+* `action`：表示划动触发的操作。
+  * **必选值**，配置与 Key 模型中的 action 配置相同。
+  
+* `label`: 表示划动显示的文本。
+  * 可选值，字符串类型。配置与 Key 模型中的 label 配置相同。
+  
+* `display`: 表示是否在按键 UI 中显示滑动的文本。
+  * 可选值，布尔类型(true/false)。如果不填写，默认为 true，即显示。
+
+* `processByRIME`: 表示滑动触发操作是否经过 RIME 引擎处理。
+  * 可选值。布尔类型(true/false)。如果不填写，默认为 false，即不经过 rime 引擎处理。
+  > 注意：此参数对 symbol 类型无效，symbol 类型始终不经过 rime 引擎处理
+
+## KeyCallout 模型
+
+> 注意：长按选项不支持换行
+
+* `action`：表示触发的操作。
+  * **必选值**，配置与 Key 模型中的 action 配置相同。
+  * 如果不想呼出的 action 操作由 RIME 处理，请使用 `symbol`, `character`开头的操作会经过 rime 引擎处理。
+
+* `label`: 表示划动显示的文本。
+  * 必选值，字符串类型。配置与 Key 模型中的 label 配置相同。
+
+## Action 选项
+
+对应 `action` 的值，`action`的值必须为以下形式
+
+* `backspace`：表示物理键盘的退格键。
+* `enter`：表示物理键盘的回车键。
+* `shift`：表示物理键盘的 Shift 键。
+* `tab`：表示物理键盘的 Tab 键。
+* `space`：表示物理键盘的空格键。
+* `character: { char: 字符 }`：表示物理键盘的字符按键，其中`字符`表示具体的 ASCII 字符。
+  
+  > 注意：`character`类型会经过 RIME 引擎处理，所以必须是 ASCII 中的单个字符，如果是多个，则截取首个字符。
+  
+  例如：
+  * `a` 键的配置为 `action: { character: { char: a } }`，注意是小写，如果想显示为大写可以通过 `label` 属性配置实现。
+
+
+* `characterMargin: { char: 字符 }`：用来表示虚拟按键的占位符。不显示，但点击后会和 `character` 的效果相同。例如中文26键中 `A` 键的左侧空白，`L`键的右侧空白。
+
+  > 注意：`characterMargin` 类型会经过 RIME 引擎处理，所以必须是 ASCII 中的单个字符，如果是多个，则截取首个字符。
+  
+* `keyboardType: type`: 表示切换虚拟键盘的类型，其中 type 表示切换的类型。type 必须符合 [KeyboardType 选项](#keyboardtype-选项)，具体如何填写请参考 [KeyboardType 选项](#keyboardtype-选项)。
+
+  例如：
+  * 表示切换到数字九宫格键盘 `action: { keyboardType: numericNineGrid }`
+  * 表示切换分类符号键盘 `action: { keyboardType: classifySymbolic }`
+  * 表示切换到自定义键盘-仓颉 `action: { keyboardType: 仓颉 }`
+
+* `symbol: { char: string }`：用来表示想要输入字符串，其中 `string` 表示您想输入的字符串，可以为任何 unicode 字符，不限长度。
+
+  > 注意：`symbol` 类型不会经过 RIME 引擎处理。
+  
+  例如：
+  * `action: { symbol: { char: 你好 } }`，会直接上屏“你好”。
+
+* `shortcutCommand: command`: 用来表示快捷指令，其中 `command` 表示指令名称。具体指令名称请参考 [#ShortcutCommand 选项](#shortcutcommand-选项)。
+
+  例如：
+  * `action: { shortcutCommand: "#行首" }`：表示移动到行首。
+
+* `none`: 仅用来表示占位符，不做任何操作且UI不应呈现。
+* `nextKeyboard`: 系统键盘切换键，类似系统的地球键，用来切换到 iOS 系统中的其他键盘。
+
+## KeyboardType 选项
+
+对应 `action` 中 `keyboardType` 的 `type` 值。
+
+* `alphabetic`：表示英文键盘。
+* `classifySymbolic`：表示分类符号键盘。
+* `chinese`：表示中文26键的键盘。
+* `chineseNineGrid`：表示中文九宫格键盘。
+* `numericNineGrid`：表示数字九宫格键盘。
+* `emojis`：表示 Emoji 键盘，预留功能，目前还不支持 emoji 键盘。
+* `自定义键盘名称`: 表示自定义键盘，对应 Keyboard 模型中的 `name` 值。
+
+## ShortcutCommand 选项
+
+对应 `action` 中 `shortcutCommand` 的 `command` 值。
+
+* `#重输`：表示清空还未上屏的输入字符。
+* `#简繁切换`: 表示中文简繁切换。
+* `#中英切换`：表示中文英文切换。
+* `#行首`：表示光标移动到行首。
+* `#行尾`：表示光标移动到行尾。
+* `#次选上屏`：表示候选文字列表中次选文字上屏。
+* `#三选上屏`：表示候选文字列表中第三位候选文字上屏。
+* `#上个输入方案`：表示当在“输入方案列表”中选择两个或两个以上方案时，最近一次的输入方案与当前输入方案切换。
+* `#换行`：表示换行，注意：这里使用 `\r` 表示换行。
+* `#RimeSwitcher`：表示进入 RIME 的 switch 功能。
+* `#左移`：表示光标向左移动一个字符
+* `#右移`：表示光标向右移动一个字符
+* `sendKeys: { keys: string }`：表示向 RIME 引擎发送指定按键。`string` 表示组合按键的配置，配置示例: `action: { shortcutCommand: { sendKeys: { keys: "Control+l" } } }`
+* `#关闭键盘`：表示关闭当前键盘
+* `#左手模式`: 单手模式中的左手模式
+* `#右手模式`: 单手模式中的右手模式
+* `#方案切换`: 显示已选的方案列表，在列表中可切换当前输入方案。
+
+## KeyWidth 选项
+
+用来表示键宽。
+
+KeyWidth 选项可以填写以下值：
+
+* `available`: 表示剩余宽度，如果同行中有两个及两个以上的按钮的宽度为 `available` 类型，则它们会平分剩余宽度。
+* `input`: 全键盘中全部 input 类型的按键，宽度相同。系统会自动计算 `input` 类型的宽度。
+* `inputPercentage: value`: 使用 `input` 类型宽度的百分比作为按键的宽度, 其中 `value` 为表示百分比的值，浮点类型。
+
+  例如: 
+  * `width: { inputPercentage: 2 }` 表示 `input` 类型宽度的 2 倍作为按键宽度。
+  * `width: { inputPercentage: 0.5 }` 表示 `input` 类型宽度的 1/2 作为按键宽度。
+  
+* `percentage: value`：使用行宽度的百分比作为按键的宽度，其中 `value` 为表示百分比的值，浮点类型。
+ 
+  例如：`width: { percentage: 0.13 }` 表示行宽度的 13% 作为当前按键的宽度。
+
+* `points: value`: 指定按键宽度为已 pt(point) 为单位的固定值。其中 `value` 为浮点类型。
+
+  例如：`width: { points: 20 }`：表示当前按键宽度为 20 个 pt。
+
+按键宽度有两种表示方式：
+
+* 方式1: 直接赋值，表示横屏模式/纵屏模式宽度相同。
+
+```yaml
+width: available
+width: { percentage: 0.13 }
+```
+
+* 方式2: 为横屏/纵屏模式设置不同值。
+
+```yaml
+width:
+  portrait: { percentage: 0 }
+  landscape: { percentage: 0.07 }
+```
+
+## Direction 选项
+
+* `up`: 表示向上划动。
+* `down`：表示向下划动。
+* `left`: 表示向左划动。
+* `right`：表示向右划动。
+
+
+## RowHeight 选项
+
+用来表示行高。有两种表达方式
+
+* 方式1：单独填写浮点类型数值，如：`rowHeight: 40.5`，则表示屏幕在横屏与纵屏模式下行高相同。
+* 方式2：纵屏和横屏模式下设定不同的高度。可以为`portrait`与`landscape`赋值。如：
+
+```yaml
+rowHeight:
+  portrait: 40.5
+  landscape: 30.5
+```
+
+## ButtonInsets 选项
+
+用来表示按键内距。有两种表达方式
+
+* 方式1: 单独填写浮点数值，如`buttonInsets: 3`，表示按键的四条边的内距相同，都为 `3`。
+* 方式2：对象模式，为四边分别设定内距。如：
+
+```yaml
+buttonInsets: { left: 2, right: 2, top: 4, bottom: 4 }
+```
+
+> 注意：单个属性如果未赋值，则该属性值为零。
+
+
+## 配置示例
+
+```yaml
+keyboards:
+  - name: "仓颉"
+    isPrimary: true
+    rows:
+      - keys:
+          - action: { character: { char: q } }
+            label: "手"
+            swipe:
+              - direction: up
+                action: { character: { char: 1 } }
+                display: true
+          - action: { character: { char: w } }
+            label: "田"
+            swipe:
+              - direction: up
+                action: { character: { char: 2 } }
+                display: true
+          - action: { character: { char: e } }
+            label: "水"
+            swipe:
+              - direction: up
+                action: { character: { char: 3 } }
+                display: true
+          - action: { character: { char: "r" } }
+            label: "口"
+            swipe:
+              - direction: up
+                action: { character: { char: "4" } }
+                display: true
+          - action: { character: { char: "t" } }
+            label: "廿"
+            swipe:
+              - direction: up
+                action: { character: { char: "5" } }
+                display: true
+          - action: { character: { char: "y" } }
+            label: "卜"
+            swipe:
+              - direction: up
+                action: { character: { char: "6" } }
+                display: true
+          - action: { character: { char: "u" } }
+            label: "山"
+            swipe:
+              - direction: up
+                action: { character: { char: "7" } }
+                display: true
+          - action: { character: { char: "i" } }
+            label: "戈"
+            swipe:
+              - direction: up
+                action: { character: { char: "8" } }
+                display: true
+          - action: { character: { char: "o" } }
+            label: "人"
+            swipe:
+              - direction: up
+                action: { character: { char: "9" } }
+                display: true
+          - action: { character: { char: "p" } }
+            label: "心"
+            swipe:
+              - direction: up
+                action: { character: { char: "0" } }
+                display: true
+      - keys:
+          - action: { characterMargin: { char: "a" } }
+            width: available
+          - action: { character: { char: "a" } }
+            label: "日"
+            swipe:
+              - direction: up
+                action: { character: { char: "!" } }
+                display: true
+          - action: { character: { char: "s" } }
+            label: "尸"
+            swipe:
+              - direction: up
+                action: { character: { char: "@" } }
+                display: true
+          - action: { character: { char: "d" } }
+            label: "木"
+            swipe:
+              - direction: up
+                action: { character: { char: "#" } }
+                display: true
+          - action: { character: { char: "f" } }
+            label: "火"
+            swipe:
+              - direction: up
+                action: { character: { char: "$" } }
+                display: true
+          - action: { character: { char: "g" } }
+            label: "土"
+            swipe:
+              - direction: up
+                action: { character: { char: "%" } }
+                display: true
+          - action: { character: { char: "h" } }
+            label: "竹"
+            swipe:
+              - direction: up
+                action: { character: { char: "&" } }
+                display: true
+          - action: { character: { char: "j" } }
+            label: "十"
+            swipe:
+              - direction: up
+                action: { character: { char: "*" } }
+                display: true
+          - action: { character: { char: "k" } }
+            label: "大"
+            swipe:
+              - direction: up
+                action: { character: { char: "(" } }
+                display: true
+          - action: { character: { char: "l" } }
+            label: "中"
+            swipe:
+              - direction: up
+                action: { character: { char: ")" } }
+                display: true
+          - action: { characterMargin: { char: "l" } }
+            width: available
+      - keys:
+          - action: { keyboardType: classifySymbolic }
+            width: { percentage: 0.13 }
+          - action: { characterMargin: { char: "z" } }
+            width: available
+          - action: { character: { char: "z" } }
+            label: "重"
+            swipe:
+              - direction: up
+                action: { character: { char: "~" } }
+                display: true
+          - action: { character: { char: "x" } }
+            label: "難"
+            swipe:
+              - direction: up
+                action: { character: { char: ":" } }
+                display: true
+          - action: { character: { char: "c" } }
+            label: "金"
+            swipe:
+              - direction: up
+                action: { character: { char: "'" } }
+                display: true
+          - action: { character: { char: "v" } }
+            label: "女"
+            swipe:
+              - direction: up
+                action: { character: { char: "_" } }
+                display: true
+          - action: { character: { char: "b" } }
+            label: "月"
+            swipe:
+              - direction: up
+                action: { character: { char: "," } }
+                label: "，"
+                display: true
+          - action: { character: { char: "n" } }
+            label: "弓"
+            swipe:
+              - direction: up
+                action: { character: { char: "." } }
+                label: "。"
+                display: true
+          - action: { character: { char: "m" } }
+            label: "一"
+            swipe:
+              - direction: up
+                action: { character: { char: "?" } }
+                label: "？"
+                display: true
+          - action: { characterMargin: { char: "m" } }
+            width: available
+          - action: backspace
+            width: { percentage: 0.13 }
+            swipe:
+              - direction: up
+                action: { shortcutCommand: "#重输" }
+      - keys:
+          - action: { keyboardType: numericNineGrid }
+            width: { percentage: 0.19 }
+          - action: space
+            width: available
+            label:
+              loadingText: "仓输入法"
+              text: "空格"
+          - action: { character: { char: "," } }
+            label: "，"
+            swipe:
+              - direction: up
+                action: { character: { char: "." } }
+                label: "。"
+                display: true
+          - action: { keyboardType: alphabetic }
+            width: { percentage: 0.13 }
+          - action: enter
+            width: { percentage: 0.19 }
+```
+
+## 配置工具
+
+感谢 @lost-melody 开发的自定义键盘工具。
+
+[https://lost-melody.github.io/hamster-tools](https://lost-melody.github.io/hamster-tools)
+
+
+# 如何使用定义好的键盘
+
+「仓」提供两种方式使用自定义键盘。
+
+* 方式一：导入
+
+「键盘设置」->「键盘布局」，点击 「+」，可将节点为 `keyboards` 的自定义键盘 yaml 文件导入到仓中。
+
+* 方式二：自定义配置文件
+
+这部分可以参考，`SharedSupport/hamster.yaml`文件，在这个配置文件中有如下内容：
+
+```yaml
+keyboards:
+  __include: hamster_keyboards:/keyboards
+```
+
+这个配置的意思是，导入`hamster_keyboards.yaml`文件中的`keyboards`节点内容。
+
+而`keyboards`节点内容就是定义好的键盘。其为数组类型，可以定义多个键盘。
+
+内容类似如下，下面示例中定义了两个键盘。
+
+```yaml
+keyboards:
+  - name: "仓颉"
+    # 省略键盘定义内容
+  - name: "大千注音"
+    # 省略键盘定义内容
+```
+
+这两种方式有什么区别？
+
+1. 方式一是通过界面导入的，导入的内容会存储在应用内部存储（非文本文件格式），不利于临时修改调整。也不利于 `iCloud同步` 功能。
+2. 方式二是通过配置文件生效的，你可以看到明文内容，可随时调整，也可以利用`iCloud同步`功能。
