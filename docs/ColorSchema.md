@@ -183,10 +183,13 @@
 * `button_back_color`: 按键背景色
 * `button_pressed_back_color`: 按下时按键背景色
 * `button_foreground_color`: 按键上文字颜色
-* `button_pressed_foreground_color`：按下时按键上文字颜色
-* `button_swipe_foreground_color`: 按键上划动手势文字颜色
+* `button_pressed_foreground_color`：当按键按下时，按键上文字颜色
+* `button_swipe_foreground_color`: 按键划动手势文字颜色
 * `corner_radius`: 按键的圆角半径
 * `border_color`：按键边框色
+* `shadow_color`: 按键阴影
+* `shadow_size`：阴影大小
+
 
 候选栏配色参数
 
@@ -199,3 +202,11 @@
 * `comment_text_color`：候选栏次选文字 Comment 信息颜色
 * `label_color`: 候选栏次选序号颜色
 
+长按 Action
+
+* `hilited_callout_back_color`:  长按首选背景色
+* `hilited_callout_foreground_color` 长按首选文字颜色
+
+按键气泡
+
+* `button_bubble_back_color`：按键气泡颜色（可选），为空时使用 `button_back_color` 作为气泡颜色，长按 Action 的背景色等同此颜色

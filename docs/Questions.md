@@ -86,3 +86,59 @@ swipe:
 如[文件管理-「应用文件」与「键盘文件」](FilesManager.html#应用文件与键盘文件)中所描述的，默认情况，键盘对「键盘文件」目录只能读，不能写，所以键盘生成的自造词文件是无法保存的。
 
 如果您使用自造词功能，请务必为键盘开启「完全访问权限」
+
+#### 如何永久保持简繁状态，直到手动切换简繁状态
+
+永久保存状态需要有两个前提：
+
+1. 对应输入方案中的 `switches` 中选项，需要屏蔽 `reset`。
+2. 永久保持状态必须通过 `RimeSwitcher` 功能（F4）进行切换，不能通过快捷键或者指令进行切换。
+
+
+设置方法：
+
+1. 输入方案文件`xxx.schema.yaml`中修改 `switches` 选项, 屏蔽 `reset` 选项
+
+  ```yaml
+  switches:
+    - name: ascii_mode
+      states: [ 中, Ａ ]
+      # reset: 0
+    - name: ascii_punct # 中英标点
+      states: [ ¥, $ ]
+      # reset: 0
+    - name: traditionalization
+      states: [ 简, 繁 ]
+      # reset: 0
+    - name: emoji
+      states: [ 💀, 😄 ]
+      # reset: 1
+    - name: full_shape
+      states: [ 半角, 全角 ]
+      # reset: 0
+  ```
+
+2. `default.yaml` 或者 `default.custom.yaml` 文件中添加或修改 `save_options` 选项，添加第一步中方案文件中 `switches/name` 对应的值。
+
+  ```yaml
+  # 方案选单相关
+  switcher:
+    caption: 「方案选单」
+    hotkeys:
+      - F4
+      - Control+grave
+      # - Alt+grave
+      - Control+Shift+grave
+    save_options:  # 开关记忆（方案中的 switches），从方案选单（而非快捷键）切换时会记住的选项，需要记忆的开关不能设定 reset
+      - ascii_punct
+      - traditionalization
+      - emoji
+      - full_shape
+    fold_options: true            # 呼出时是否折叠，多方案时建议折叠 true ，一个方案建议展开 false
+    abbreviate_options: true      # 折叠时是否缩写选项
+    option_list_separator: ' / '  # 折叠时的选项分隔符
+  ```
+
+
+设置好后，在「仓」的键盘划动中，设置快捷指令`#RimeSwitcher`，此时在键盘中呼出选项菜单后，就可以永久保持对应选项的状态了。
+
