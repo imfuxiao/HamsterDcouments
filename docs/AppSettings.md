@@ -52,7 +52,7 @@
 
 千万不要这样做。虽然您可以修改它，并且修改后也能生效。但`SharedSupport` 是仓内置的目录，不能保证以后在升级版本时，是否会自动覆盖此目录的情况。一旦覆盖了，您的配置项就丢了。
 
-还是如上面所说，您可以根据`SharedSupport/hamster.yaml`文件为模板，自己调整参数，调整完毕后，将文件上传至`Rime`目录，并运行「重新部署」。
+正确的做法：将您修改后的配置文件 `hamster.yaml` 或 `hamster.custom.yaml` 上传至 `Rime` 目录，并运行「重新部署」。
 
 
 #### 问题三：我的配置文件`hamster.yaml`或者`hamster.custom.yaml`配置项没有生效，怎么办？

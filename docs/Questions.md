@@ -41,10 +41,67 @@
 
     ```yaml
     patch:
-    swipe:
+      swipe:
         keyboardSwipe/+:
             - keyboardType: chineseNineGrid
               keys: []
+    ```
+
+    > 注意：如果您自身已经有 `hamster.custom.yaml`文件了，这可以上面的 `patch`以下内容（不包含 `patch`，注意缩进）添加到自己的配置文件中。
+
+2. 将文件上传至 `Rime` 目录中
+3. 运行「RIME」下的「重新部署」
+
+#### 内置键盘中文九宫格如何自定义按键划动配置
+
+1. 新增 `hamster.custom.yaml` 文件，文件内容如下：
+
+    ```yaml
+    patch:
+      swipe:
+        keyboardSwipe:
+        - keyboardType: chineseNineGrid
+          keys:
+            - action: { chineseNineGrid: { symbol: { char: "@/." } } }
+              swipe:
+                - direction: up
+                  action: { symbol: { char: "1" } }
+            - action: { chineseNineGrid: { symbol: { char: "ABC" } } }
+              swipe:
+                - direction: up
+                  action: { symbol: { char: "2" } }
+            - action: { chineseNineGrid: { symbol: { char: "DEF" } } }
+              swipe:
+                - direction: up
+                  action: { symbol: { char: "3" } }
+            - action: { chineseNineGrid: { symbol: { char: "GHI" } } }
+              swipe:
+                - direction: up
+                  action: { symbol: { char: "4" } }
+            - action: { chineseNineGrid: { symbol: { char: "JKL" } } }
+              swipe:
+                - direction: up
+                  action: { symbol: { char: "5" } }
+            - action: { chineseNineGrid: { symbol: { char: "MNO" } } }
+              swipe:
+                - direction: up
+                  action: { symbol: { char: "6" } }
+            - action: { chineseNineGrid: { symbol: { char: "PQRS" } } }
+              swipe:
+                - direction: up
+                  action: { symbol: { char: "7" } }
+            - action: { chineseNineGrid: { symbol: { char: "TUV" } } }
+              swipe:
+                - direction: up
+                  action: { symbol: { char: "8" } }
+            - action: { chineseNineGrid: { symbol: { char: "WXYZ" } } }
+              swipe:
+                - direction: up
+                  action: { symbol: { char: "9" } }
+            - action: space 
+              swipe:
+                - direction: up
+                  action: { symbol: { char: "0" } }
     ```
 
     > 注意：如果您自身已经有 `hamster.custom.yaml`文件了，这可以上面的 `patch`以下内容（不包含 `patch`，注意缩进）添加到自己的配置文件中。
