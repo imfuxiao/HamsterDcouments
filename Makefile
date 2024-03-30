@@ -1,6 +1,6 @@
 install:
 	npm install honkit -g
-preview:
+dev:
 	npx honkit serve
 build:
 	npx honkit build

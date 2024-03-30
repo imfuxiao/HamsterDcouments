@@ -26,6 +26,35 @@
 * `rows`: 键盘的行。
   * **必选项**，数组类型。
   * 数组中每个元素对应 [Row 模型](#row-模型)。
+* `keyStyle`: 按键样式。
+  * 可选项，字典类型。
+  * 字典的键: 为样式名称，供 [按键模式](#key-模型) 中的 `lightModeStyleName` 或 `darkModeStyleName` 引用
+  * 字典的值: 为按键样式，对应 [KeyStyle 按键样式](#keystyle-按键样式)
+  * 配置示例
+
+    ```yaml
+    keyboards:
+    - name: 26keys
+      keyStyle:
+        light1:
+          buttonBackgroundColor: '0xFF0024E2'
+          # 其他属性
+        light2:
+          buttonBackgroundColor: '0xFF0024E2'
+          # 其他属性
+        dark1:
+          buttonBackgroundColor: '0xFF0024E2'
+          # 其他属性
+        dark2:
+          buttonBackgroundColor: '0xFF0024E2'
+          # 其他属性
+      rows:
+        - keys:
+            - action: { character: { char: q }}
+              lightModeStyleName: light1
+              darkModeStyleName: light1
+      # 其他属性
+    ```
 
 ## Row 模型
 
@@ -64,18 +93,24 @@
     ```
 * `swipe`：按键滑动配置。
 
-  * 可选值，数组类型，每个元素对应 [KeySwipe 模型](#keyswipe-模型) 模型。如果为空，则表示该按键没有划动配置。
+  * 可选值，数组类型，每个元素对应 [KeySwipe 模型](#keyswipe-模型)。如果为空，则表示该按键没有划动配置。
   * 具体配置参考 [KeySwipe 模型](#keyswipe-模型)。
 
 * `callout`：按键长按呼出视图配置。
 
-  * 可选值，数组类型，每个元素对应 [KeyCallout 模型](#keycallout-模型) 模型。如果为空，则表示该按键长按呼出设置。
+  * 可选值，数组类型，每个元素对应 [KeyCallout 模型](#keycallout-模型)。如果为空，则表示该按键长按呼出设置。
   * 具体配置参考 [KeyCallout 模型](#keycallout-模型)。
   * 例如：
   ```yaml
   callout:
     - action: { shortcutCommand: "#上个输入方案" }
   ```
+
+* `lightModeStyleName` 
+  * 可选项，字符串类型，表示浅色模式下按键样式名称。用来引用 [Keyboard 模型](#keyboard-模型) 的 `keyStyle` 字典类型的名称。
+
+* `darkModeStyleName` 
+  * 可选项，字符串类型，表示暗色模式下按键样式名称。用来引用 [Keyboard 模型](#keyboard-模型) 的 `keyStyle` 字典类型的名称。
 
 ## KeySwipe 模型
 
@@ -255,6 +290,24 @@ buttonInsets: { left: 2, right: 2, top: 4, bottom: 4 }
 
 > 注意：单个属性如果未赋值，则该属性值为零。
 
+## KeyStyle 按键样式
+
+以下颜色均为 **BGR格式**， 且必须以 `0x` 开头，`0x` 只是表明格式为十六进制，且程序也是以十六进制做处理的，别想着省略 `0x`，或者转为别的进制。
+
+* `buttonBackgroundColor`: 按键背景色，字符串类型。
+* `pressedButtonBackgroundColor`: 按下时按键背景色，字符串类型。
+* `buttonForegroundColor`: 按键上文字颜色，字符串类型。
+* `pressedButtonForegroundColor`：当按键按下时，按键上文字颜色，字符串类型。
+* `swipeForegroundColor`: 按键划动文字颜色，字符串类型。
+* `pressedSwipeForegroundColor`: 当按键按下时，按键划动文字颜色，字符串类型。
+* `cornerRadius`: 按键的圆角半径，数值类型。
+* `borderColor`：按键边框色，字符串类型。
+* `borderSize`：按键边框大小，数值类型。
+* `fontSize`：按键文字大小，数值类型。
+* `swipeFontSize`：划动文字大小，数值类型。
+* `lowerEdgeColor`：按键下方边缘颜色，字符串类型。
+* `shadowColor`: 按键阴影颜色，字符串类型。
+* `shadowSize`：按键阴影大小，数值类型。
 
 ## 配置示例
 

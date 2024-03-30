@@ -28,6 +28,7 @@
             * [Direction 选项](CustomKeyboard.md#direction-选项)
             * [RowHeight 选项](CustomKeyboard.md#rowheight-选项)
             * [ButtonInsets 选项](CustomKeyboard.md#buttoninsets-选项)
+            * [KeyStyle 按键样式](CustomKeyboard.md#keystyle-按键样式)
             * [配置示例](CustomKeyboard.md#配置示例)
             * [配置工具](CustomKeyboard.md#配置工具)
         * [如何使用定义好的键盘](CustomKeyboard.md#如何使用定义好的键盘)
