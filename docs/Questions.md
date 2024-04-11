@@ -52,7 +52,7 @@
 2. 将文件上传至 `Rime` 目录中
 3. 运行「RIME」下的「重新部署」
 
-#### 内置键盘中文九宫格如何自定义按键划动配置
+#### 内置键盘中文九宫格如何自定义按键划动与长按
 
 1. 新增 `hamster.custom.yaml` 文件，文件内容如下：
 
@@ -63,9 +63,14 @@
         - keyboardType: chineseNineGrid
           keys:
             - action: { chineseNineGrid: { symbol: { char: "@/." } } }
+              # 自定义滑动设置
               swipe:
                 - direction: up
                   action: { symbol: { char: "1" } }
+              # 自定义长按设置
+              callout:
+                - action: { symbol: { char: ".com" } }
+                  label: "com"
             - action: { chineseNineGrid: { symbol: { char: "ABC" } } }
               swipe:
                 - direction: up
