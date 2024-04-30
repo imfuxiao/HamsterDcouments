@@ -41,8 +41,7 @@
 
     ```yaml
     patch:
-      swipe:
-        keyboardSwipe/+:
+      swipe/keyboardSwipe/+:
             - keyboardType: chineseNineGrid
               keys: []
     ```
@@ -58,8 +57,7 @@
 
     ```yaml
     patch:
-      swipe:
-        keyboardSwipe:
+      swipe/keyboardSwipe/+:
         - keyboardType: chineseNineGrid
           keys:
             - action: { chineseNineGrid: { symbol: { char: "@/." } } }
@@ -103,7 +101,7 @@
               swipe:
                 - direction: up
                   action: { symbol: { char: "9" } }
-            - action: space 
+            - action: space
               swipe:
                 - direction: up
                   action: { symbol: { char: "0" } }
@@ -113,6 +111,28 @@
 
 2. 将文件上传至 `Rime` 目录中
 3. 运行「RIME」下的「重新部署」
+
+#### 内置英文键盘如何自定义按键划动与长按
+
+操作同 [内置键盘中文九宫格如何自定义按键划动与长按] 只是将 `keyboardType: chineseNineGrid` 改为 `keyboardType: alphabetic`。
+
+参考示例：
+
+```yaml
+patch:
+  swipe/keyboardSwipe/+:
+      - keyboardType: alphabetic
+        keys:
+          - action: { symbol: { char: "a" } }
+            # 自定义滑动设置
+            swipe:
+              - direction: up
+                action: { symbol: { char: "1" } }
+            # 自定义长按设置
+            callout:
+              - action: { symbol: { char: ".com" } }
+                label: "com"
+```
 
 #### 键盘划动容易误触怎么办
 
