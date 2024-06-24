@@ -8,4 +8,4 @@ pdf:
 	# brew install --cask calibre
 	npx honkit pdf ./ ~/Downloads/hamster_docs.pdf
 upload: build
-	scp -r ./_book/* ubuntu@ihsiao:/var/www/book
+	scp -r ./_book/* test03:/var/www/hamster-document

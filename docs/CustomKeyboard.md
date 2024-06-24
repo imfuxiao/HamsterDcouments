@@ -80,16 +80,17 @@
 
   > 注意：此参数对 symbol 类型无效，symbol 类型始终不经过 rime 引擎处理。
 
-* `label`: 按键显示文本。
+* `label`: 按键显示文本。每个元素对应 [KeyLabel 模型](#KeyLabel-模型)
 
   * 可选值，字符串类型。如果不填写，则使用 `action` 对应的文本显示，比如 `action` 的值为 `character(a)`，则显示为 `a`。
   * `label` 可填写两种格式:
-    * 格式1: `label: '常显文本'`，为非空格键指定常显的文本。 
+    * 格式1: `label: '常显文本'`，为非空格键指定常显的文本。
     * 格式2: 为空格指定加载文本使用。
     ```yaml
     label:
       loadingText: '加载文字'
       text: '常显文字'
+      systemImageName: 'SF Font名称'
     ```
 * `swipe`：按键滑动配置。
 
@@ -106,10 +107,10 @@
     - action: { shortcutCommand: "#上个输入方案" }
   ```
 
-* `lightModeStyleName` 
+* `lightModeStyleName`
   * 可选项，字符串类型，表示浅色模式下按键样式名称。用来引用 [Keyboard 模型](#keyboard-模型) 的 `keyStyle` 字典类型的名称。
 
-* `darkModeStyleName` 
+* `darkModeStyleName`
   * 可选项，字符串类型，表示暗色模式下按键样式名称。用来引用 [Keyboard 模型](#keyboard-模型) 的 `keyStyle` 字典类型的名称。
 
 ## KeySwipe 模型
@@ -119,10 +120,10 @@
 
 * `action`：表示划动触发的操作。
   * **必选值**，配置与 Key 模型中的 action 配置相同。
-  
+
 * `label`: 表示划动显示的文本。
   * 可选值，字符串类型。配置与 Key 模型中的 label 配置相同。
-  
+
 * `display`: 表示是否在按键 UI 中显示滑动的文本。
   * 可选值，布尔类型(true/false)。如果不填写，默认为 true，即显示。
 
@@ -141,6 +142,14 @@
 * `label`: 表示划动显示的文本。
   * 必选值，字符串类型。配置与 Key 模型中的 label 配置相同。
 
+## KeyLabel 模型
+
+* `loadingText`: 空格启动加载文字，仅对 **Action是空格时** 有效，且只有键盘首次加载显示。
+* `text`: 按键显示文字。如果想使用无刻模式，可以使用 `" "` 设置
+* `systemImageName`: 苹果 SF Symbol 名称，可在[官网下载](https://developer.apple.com/sf-symbols/)查询
+
+注意：SF Symbol 图片效果也可通过按键的 `keyStyle` 调节。
+
 ## Action 选项
 
 对应 `action` 的值，`action`的值必须为以下形式
@@ -151,16 +160,16 @@
 * `tab`：表示物理键盘的 Tab 键。
 * `space`：表示物理键盘的空格键。
 * `character: { char: 字符 }`：表示物理键盘的字符按键，其中`字符`表示具体的 ASCII 字符。
-  
+
   > 注意：`character`类型会经过 RIME 引擎处理，所以必须是 ASCII 中的单个字符，如果是多个，则截取首个字符。
-  
+
   例如：
   * `a` 键的配置为 `action: { character: { char: a } }`，注意是小写，如果想显示为大写可以通过 `label` 属性配置实现。
 
 * `characterMargin: { char: 字符 }`：用来表示虚拟按键的占位符。不显示，但点击后会和 `character` 的效果相同。例如中文26键中 `A` 键的左侧空白，`L`键的右侧空白。
 
   > 注意：`characterMargin` 类型会经过 RIME 引擎处理，所以必须是 ASCII 中的单个字符，如果是多个，则截取首个字符。
-  
+
 * `keyboardType: type`: 表示切换虚拟键盘的类型，其中 type 表示切换的类型。type 必须符合 [KeyboardType 选项](#keyboardtype-选项)，具体如何填写请参考 [KeyboardType 选项](#keyboardtype-选项)。
 
   例如：
@@ -171,7 +180,7 @@
 * `symbol: { char: string }`：用来表示想要输入字符串，其中 `string` 表示您想输入的字符串，可以为任何 unicode 字符，不限长度。
 
   > 注意：`symbol` 类型不会经过 RIME 引擎处理。
-  
+
   例如：
   * `action: { symbol: { char: 您好 } }`，会直接上屏“您好”。
 
@@ -227,12 +236,12 @@ KeyWidth 选项可以填写以下值：
 * `input`: 全键盘中全部 input 类型的按键，宽度相同。系统会自动计算 `input` 类型的宽度。
 * `inputPercentage: value`: 使用 `input` 类型宽度的百分比作为按键的宽度, 其中 `value` 为表示百分比的值，浮点类型。
 
-  例如: 
+  例如:
   * `width: { inputPercentage: 2 }` 表示 `input` 类型宽度的 2 倍作为按键宽度。
   * `width: { inputPercentage: 0.5 }` 表示 `input` 类型宽度的 1/2 作为按键宽度。
-  
+
 * `percentage: value`：使用行宽度的百分比作为按键的宽度，其中 `value` 为表示百分比的值，浮点类型。
- 
+
   例如：`width: { percentage: 0.13 }` 表示行宽度的 13% 作为当前按键的宽度。
 
 * `points: value`: 指定按键宽度为以 pt(point) 为单位的固定值。其中 `value` 为浮点类型。
