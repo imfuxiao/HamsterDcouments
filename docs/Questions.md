@@ -226,3 +226,38 @@ swipe:
 
 > 注意：每次「重新部署」后，会丢失状态。
 
+#### 键盘中「简繁切换」如何设置
+
+由于「简繁切换」的设置在每个 RIME 方案中设置都不同，所以「仓」中提供了一个「简繁切换」文本框，需要用户自己填写所使用方案中的「简繁切换」选项的值。
+
+如果你使用「雾凇」输入方案，就无须设置了，「仓」提供的默认值就是「雾凇」输入方案中选项的值。
+
+1. 查询自己使用方案中「简繁切换」配置项的值。
+
+  这个值在 `*.schema.yaml` 文件中，已「雾凇」输入方案为例，在 `rime_ice.schema.yaml` 配置文件中。
+
+  这此文件中查找选项 `switches`，里面有简繁切换的设置项，在雾凇中此设置项为：`traditionalization`。如下：
+
+  ```yaml
+  switches:
+  - name: ascii_mode
+    states: [ 中, Ａ ]
+  - name: ascii_punct  # 中英标点
+    states: [ ¥, $ ]
+  - name: traditionalization
+    states: [ 简, 繁 ]
+  - name: emoji
+    states: [ 💀, 😄 ]
+    reset: 1
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: search_single_char  # search.lua 的功能开关，辅码查词时是否单字优先
+    abbrev: [词, 单]
+    states: [正常, 单字]
+  ```
+
+2. 修改「仓」中默认的「简繁切换」设置项的值。
+
+  打开「仓」，将「上一步」查找的值，填写至「RIME」的「简繁切换键值」中，注意点击回车键保存。
+
+
