@@ -42,8 +42,8 @@
     ```yaml
     patch:
       swipe/keyboardSwipe/+:
-            - keyboardType: chineseNineGrid
-              keys: []
+        chineseNineGrid:
+          keys: []
     ```
 
     > 注意：如果您自身已经有 `hamster.custom.yaml`文件了，这可以上面的 `patch`以下内容（不包含 `patch`，注意缩进）添加到自己的配置文件中。
@@ -58,7 +58,7 @@
     ```yaml
     patch:
       swipe/keyboardSwipe/+:
-        - keyboardType: chineseNineGrid
+        chineseNineGrid:
           keys:
             - action: { chineseNineGrid: { symbol: { char: "@/." } } }
               # 自定义滑动设置
@@ -121,7 +121,7 @@
 ```yaml
 patch:
   swipe/keyboardSwipe/+:
-      - keyboardType: alphabetic
+      alphabetic:
         keys:
           - action: { symbol: { char: "a" } }
             # 自定义滑动设置
