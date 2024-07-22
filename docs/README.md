@@ -35,5 +35,5 @@
 
 如果「仓」对您有帮助，还请您支持下，可以请我吃个「煎饼馃子」，谢谢~
 
-<img src="https://ihsiao.com/images/aliPay.jpeg" width="207" height="281" />
-<img src="https://ihsiao.com/images/wechatPay.jpeg"  width="207" height="281" />
+<img src="https://ihsiao.com/aliPay.jpeg" width="207" height="281" />
+<img src="https://ihsiao.com/wechatPay.jpeg"  width="207" height="281" />
