@@ -44,6 +44,7 @@
     * [重新部署](RIME.md#重新部署)
     * [RIME 同步](RIME.md#rime-同步)
     * [RIME 重置](RIME.md#rime-重置)
+* [脚本](Function.md)
 * [常见问题](Questions.md)
     * [如何调节候选字大小/候选栏高度](Questions.md#如何调节候选字大小候选栏高度)
     * [如何显示 RIME 返回的 Comment/候选项序号](Questions.md#如何显示-rime-返回的-comment候选项序号)
