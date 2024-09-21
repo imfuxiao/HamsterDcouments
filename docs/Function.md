@@ -68,6 +68,8 @@ async function output() {
 * `body`, 可选, 默认为空, 类型: Object, key 为 String 类型, Value 可以为 任何 JavaScript 基础类型
 * `timeout`, 可选, 默认 15, 类型: Int, http 请求超时时间，单位为秒
 
+$http 默认会已 json 格式编码 `body`，并发送请求。如果您需要发送 `a=b&c=d` 格式，请为 `header` 添加 `Content-Type:application/x-www-form-urlencoded` 参数。
+
 返回值： `$http` 返回 Object 类型，对象中包含以下参数
 
 * `data`, 类型: String, 服务器返回数据，注意，这里始终会解析为字符串，如果需要解析为 json 类型，请使用 `JSON.parse()` 函数转换。
