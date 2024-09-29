@@ -221,6 +221,11 @@
 * `#左移`：表示光标向左移动一个字符。
 * `#右移`：表示光标向右移动一个字符。
 * `sendKeys: { keys: string }`：表示向 RIME 引擎发送指定按键。`string` 表示组合按键的配置，配置示例: `action: { shortcutCommand: { sendKeys: { keys: "Control+l" } } }`。
+* `openURL: { url: string }`：表示打开某个 URL。`string` 表示需要打开的地址。
+  `openURL` 有三种使用方式：
+  1. 将 `string` 设置为固定值，每次打开一个固定的地址。如每次打开微信：`action: { shortcutCommand: { openURL: { url: "weixin://" } } }`；
+  2. 将 `string` 设置为 `#pasteboardContent`，每次打开剪贴板中的地址，如果剪贴板中有多个地址，则只会打开首个地址。
+  3. 将 `string` 设置为 `固定地址#pasteboardContent`，表示使用剪贴板中内容替换地址中的 `#pasteboardContent`，然后在打开地址，如使用百度搜索剪贴板中的内容 `action: { shortcutCommand: { openURL: { url: "https://www.baidu.com/s?wd=#pasteboardContent" } } }`.
 * `#关闭键盘`：表示关闭当前键盘。
 * `#左手模式`: 单手模式中的左手模式。
 * `#右手模式`: 单手模式中的右手模式。
